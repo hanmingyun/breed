@@ -13,9 +13,6 @@ router.get('/breed/:category/:sub/images', BreedController.getSubCategoryBreedIm
 router.get('/breed/:category/:sub/images/random', BreedController.getRandomSubCategoryBreedImages);
 router.get('/breed/:category/:sub/images/random/:num', BreedController.getMultipleSubCategoryBreedImages);
 router.get('/breed/:sub/images/random/', BreedController.getRandomBySubCategory);
-// router.get('/update/:id', customerController.edit);
-// router.post('/update/:id', customerController.update);
-// router.get('/delete/:id', customerController.delete);
 
 module.exports = router;
 

@@ -2,6 +2,7 @@ const express = require('express'),
       path = require('path'),
       morgan = require('morgan'),
       mysql = require('mysql'),
+      bodyParser = require('body-parser'),
       myConnection = require('express-myconnection');
 
 const app = express();
@@ -25,10 +26,17 @@ app.use(myConnection(mysql, {
   port: config.port,
   database: config.database
 }, 'single'));
+
 app.use(express.urlencoded({extended: false}));
 
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+
 // routes
-// app.use('/', customerRoutes);
 app.use('/api', breedRoutes);
 
 // static files
