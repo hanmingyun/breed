@@ -1,8 +1,12 @@
-import { fetchBreedsPending, fetchBreedsSuccess, fetchBreedsError } from './../../src/actions/app';
+import { 
+    fetchBreedsPending,
+    fetchBreedsSuccess,
+    fetchBreedsError, 
+ } from './../../src/actions/app';
 
 const BASE_URL = "http://localhost:3100/api/";
 
-function fetchBreeds(endpoint) {
+export default function fetchBreeds(endpoint, action) {
     return dispatch => {
         dispatch(fetchBreedsPending());
         fetch(BASE_URL + endpoint)
@@ -11,14 +15,11 @@ function fetchBreeds(endpoint) {
                 if (res.error) {
                     throw (res.error);
                 }
-                console.log(res.message)
-                dispatch(fetchBreedsSuccess(res.products));
-                return res.products;
+                dispatch(fetchBreedsSuccess(res.message, action));
+                return res.message;
             })
             .catch(error => {
                 dispatch(fetchBreedsError(error));
             })
     }
 }
-
-export default fetchBreeds;

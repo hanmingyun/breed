@@ -1,0 +1,30 @@
+.detail {
+    padding: 20px;
+}
+.btn-random-container {
+    padding: 20px;
+    text-align: center;
+}
+.img-detail {
+    width: 400px;
+    height: 500px;
+}
+.name-detail {
+    font-size: 1.6em;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn-sub-breed {
+    margin-left: 20px;
+    font-weight: normal;
+    font-size: 16px;
+    color: rgb(35, 143, 243);
+    cursor: pointer;
+}
+
+.btn-sub-breed:hover {
+    color: rgb(89, 167, 240);
+}
+

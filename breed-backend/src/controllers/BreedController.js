@@ -1,5 +1,97 @@
 const controller = {};
 
+controller.getAll = (req, res) => {
+    req.getConnection((err, conn) => {
+        var sql = 'SELECT * from breed';
+
+        conn.query(sql, (err, breeds) => {
+            if (err) {
+                res.json(err);
+            }
+            res.json({
+                message: breeds
+            });
+        });
+    });
+};
+
+controller.getOne = (req, res) => {
+    var id = req.params.id;
+    req.getConnection((err, conn) => {
+        var sql = 'SELECT * from breed WHERE uid=' + id;
+
+        conn.query(sql, (err, breed) => {
+            if (err) {
+                res.json(err);
+            }
+            if(!breed || breed.length == 0) {
+                breed = null;
+            } else {
+                breed = breed[0];
+            }
+            res.json({
+                message: breed
+            });
+        });
+    });
+};
+
+controller.findBySub = (req, res) => {
+    var id = req.params.id;
+    req.getConnection((err, conn) => {
+        var sql = 'SELECT uid, name, imagePath FROM breed WHERE sub_categoryId = (SELECT sub_categoryId FROM breed WHERE uid= ' + id +  ')';
+
+        conn.query(sql, (err, breeds) => {
+            if (err) {
+                res.json(err);
+            }
+          
+            res.json({
+                message: breeds
+            });
+        });
+    });
+};
+
+controller.Random = (req, res) => {
+    req.getConnection((err, conn) => {
+        var sql = 'SELECT * from breed order by RAND() LIMIT 1';
+
+        conn.query(sql, (err, breeds) => {
+            if (err) {
+                res.json(err);
+            }
+            var breed;
+            if(breeds && breeds.length > 0) {
+                breed = breeds[0];
+            } else {
+                breed = null;
+            }
+            console.log(breed)
+            res.json({
+                message: breed
+            });
+        });
+    });
+};
+
+controller.Search = (req, res) => {
+    var param = req.params.param;
+    req.getConnection((err, conn) => {
+        var sql = "SELECT * from breed WHERE name LIKE '%"+ param +"%'";
+
+        conn.query(sql, (err, breeds) => {
+            if (err) {
+                res.json(err);
+            }
+           
+            res.json({
+                message: breeds
+            });
+        });
+    });
+};
+
 controller.listAll = (req, res) => {
     req.getConnection((err, conn) => {
         var sql = 'SELECT breed.name AS breedName, breed.uid AS breedId, breed.imagePath, category.uid AS categoryId, category.name AS category' +
@@ -272,35 +364,4 @@ controller.getRandomBySubCategory = (req, res) => {
         });
     });
 };
-// controller.edit = (req, res) => {
-//     const { id } = req.params;
-//     req.getConnection((err, conn) => {
-//         conn.query("SELECT * FROM customer WHERE id = ?", [id], (err, rows) => {
-//             res.render('customers_edit', {
-//                 data: rows[0]
-//             })
-//         });
-//     });
-// };
-
-// controller.update = (req, res) => {
-//     const { id } = req.params;
-//     const newCustomer = req.body;
-//     req.getConnection((err, conn) => {
-
-//         conn.query('UPDATE customer set ? where id = ?', [newCustomer, id], (err, rows) => {
-//             res.redirect('/');
-//         });
-//     });
-// };
-
-// controller.delete = (req, res) => {
-//     const { id } = req.params;
-//     req.getConnection((err, connection) => {
-//         connection.query('DELETE FROM customer WHERE id = ?', [id], (err, rows) => {
-//             res.redirect('/');
-//         });
-//     });
-// }
-
 module.exports = controller;
