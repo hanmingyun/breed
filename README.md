@@ -7,18 +7,19 @@
 npm install
 ```
 3. import the testing db from /breed-backend/database/db.sql
-4. start the backend by 
+4. replace the db connection info at /breed-backend/src/config.js
+5. start the backend by 
 ```
 node breed-backend/src/app.js
 ```
 
 ## Installation Frontend
-5. move to breed-frontend
-6. install node_modules in breed-frontend directory
+6. move to breed-frontend
+7. install node_modules in breed-frontend directory
 ```
 npm install
 ```
-7. start the react app
+8. start the react app
 ```
 npm start
 ```
